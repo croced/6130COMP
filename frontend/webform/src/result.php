@@ -10,7 +10,7 @@
     $lower = file_get_contents(TEMPLATE_PATH . "lower.html");
     $result = "";
 
-    $response = file_get_contents(BACKEND_URL . ":" . BACKEND_PORT . BACKEND_PATH . "?data=" . $_POST);
+    // $response = file_get_contents(BACKEND_URL . ":" . BACKEND_PORT . BACKEND_PATH . "?data=" . $_POST);
 
     /**
      * Dynamically generate the result page, depending on the response
