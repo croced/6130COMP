@@ -1,5 +1,5 @@
-body, html {
-    height: 100%;
-    margin: 0;
-  }
-  
+.blur {
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.482);
+}
