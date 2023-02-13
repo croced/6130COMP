@@ -22,5 +22,5 @@
     $view = file_get_contents(VIEWS_PATH . DEFAULT_VIEW);
     $lower = file_get_contents(TEMPLATE_PATH . "lower.html");
 
-    echo $upper . $view . $foot;
+    echo $upper . $view . $lower;
 ?>

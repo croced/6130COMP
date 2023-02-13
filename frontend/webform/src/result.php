@@ -1,6 +1,6 @@
 <?php
     // TODO: move to .env file?
-    const BACKEND_URL = "172.17.0.1";
+    const BACKEND_URL = "http://192.168.64.2";
     const BACKEND_PORT = "84";
     const BACKEND_PATH = "/competitionResult.php";
 
@@ -9,7 +9,7 @@
     $upper = file_get_contents(TEMPLATE_PATH . "upper.html");
     $lower = file_get_contents(TEMPLATE_PATH . "lower.html");
 
-    $response = file_get_contents(BACKEND_URL . ":" . BACKEND_PORT . BACKEND_PATH . "?data=" . $_POST);
+    $response = file_get_contents(BACKEND_URL . ":" . BACKEND_PORT . BACKEND_PATH . "?data=" . implode("", $_POST));
 
     /**
      * Dynamically generate the result page, depending on the response
