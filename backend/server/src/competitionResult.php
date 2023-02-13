@@ -1,46 +1,46 @@
 <?php
 
-    const HEX_REGEX = '^[a-fA-F0-9]+$';     // https://stackoverflow.com/q/11877554
+    // const HEX_REGEX = '^[a-fA-F0-9]+$';     // https://stackoverflow.com/q/11877554
     const WIN_PERCENTAGE = 1;               // 1 in 100 chance of winning a football
 
-    // if (isset($_POST['submit']))
-    // {
-        $packCode       = strtolower($_POST['packCode']);
-        $bestPlayer     = strtolower($_POST['bestPlayer']);
+    var_dump($_POST);
 
-        /**
-         * Validation:
-         *  - pack code must be a 10 characters long hex string
-         *  - player name must be at least 3 characters long
-         */
+    $packCode       = strtolower($_POST['packCode']);
+    $bestPlayer     = strtolower($_POST['bestPlayer']);
 
-        if (strlen($packCode) != 10)
-        {
-            echo "Invalid pack code!";
-            exit();
-        }
+    /**
+     * Validation:
+     *  - pack code must be a 10 characters long hex string
+     *  - player name must be at least 3 characters long
+     */
 
-        if (strlen($bestPlayer) <= 3)
-        {
-            echo "Invalid player name!";
-            exit();
-        }
+    if (strlen($_POST['packCode']) != 10)
+    {
+        echo "Invalid pack code!";
+        exit();
+    }
 
-        /**
-         * Check if the user has won a free football.
-         * If not, they should receive a 10% discount for their
-         * next packet of Runners Crisps.
-         */
+    if (strlen($_POST['bestPlayer']) < 3)
+    {
+        echo "Invalid player name!";
+        exit();
+    }
 
-        $hasWon = (mt_rand(0, 99) < WIN_PERCENTAGE);
+    /**
+     * Check if the user has won a free football.
+     * If not, they should receive a 10% discount for their
+     * next packet of Runners Crisps.
+     */
 
-        if ($hasWon)
-        {
-            echo "VOUCHER_FOOTBALL";
-        }
-        else
-        {
-            echo "VOUCHER_CRISPS";
-        }
-    // }
+    $hasWon = (mt_rand(0, 99) < WIN_PERCENTAGE);
+
+    if ($hasWon)
+    {
+        echo "VOUCHER_FOOTBALL";
+    }
+    else
+    {
+        echo "VOUCHER_CRISPS";
+    }
+ 
 ?>
