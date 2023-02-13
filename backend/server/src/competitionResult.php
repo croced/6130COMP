@@ -3,8 +3,6 @@
     // const HEX_REGEX = '^[a-fA-F0-9]+$';     // https://stackoverflow.com/q/11877554
     const WIN_PERCENTAGE = 1;               // 1 in 100 chance of winning a football
 
-    var_dump($_POST);
-
     $packCode       = strtolower($_POST['packCode']);
     $bestPlayer     = strtolower($_POST['bestPlayer']);
 
