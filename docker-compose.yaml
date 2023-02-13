@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  frontend-node1:
+    build: ./frontend/webform
+    ports:
+      - "81:80"
+  frontend-node2:
+    build: ./frontend/webform
+    ports:
+      - "82:80"
+  frontend-node3:
+    build: ./frontend/webform
+    ports:
+      - "83:80"
+  frontend-nginx:
+    build: ./frontend/nginx
+    ports:
+      - "80:80"
+    depends_on:
+     - frontend-node1
+     - frontend-node2
+     - frontend-node3 
+  backend-node1:
+    build: ./backend/server
+    ports:
+      - "85:80"
+  backend-node2:
+    build: ./backend/server
+    ports:
+      - "86:80"
+  backend-node3:
+    build: ./backend/server
+    ports:
+      - "87:80"
+  backend-nginx:
+    build: ./backend/nginx
+    ports:
+      - "84:80"
+    depends_on:
+     - backend-node1
+     - backend-node2
+     - backend-node3
