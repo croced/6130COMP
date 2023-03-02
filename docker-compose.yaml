@@ -44,3 +44,42 @@ services:
      - backend-node1
      - backend-node2
      - backend-node3
+
+     
+  mongo-node1:
+    hostname: mongo-node1
+    container_name: mongo-node1
+    image: mongo:4.1
+    ports:
+      - "40001:27017"
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo-node2:
+    hostname: mongo-node2
+    container_name: mongo-node2
+    image: mongo:4.1
+    ports:
+      - "40002:27017"
+    restart: always
+    entrypoint: [ "/usr/bin/mongod","--bind_ip_all", "--replSet", "rs0" ]
+  mongo-node3:
+    hostname: mongo-node3
+    container_name: mongo-node3
+    image: mongo:4.1
+    ports:
+      - "40003:27017"
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo-config:
+    hostname: mongo-config
+    container_name: mongo-config
+    image: mongo:4.1
+    restart: "no"
+    depends_on:
+      - mongo-node1
+      - mongo-node2
+      - mongo-node3
+    volumes:
+      - ./scripts/rs-init.sh:/scripts/rs-init.sh
+      - ./scripts/init.js:/scripts/init.js
+    entrypoint: [ "bash" , "/scripts/rs-init.sh" ]
