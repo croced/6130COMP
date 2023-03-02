@@ -1,4 +1,5 @@
 <?php
+    require 'vendor/autoload.php';
 
     /**
      * MongoDB Database connection and setup

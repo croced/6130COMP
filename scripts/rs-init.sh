@@ -4,7 +4,7 @@ DELAY=30
 
 sleep 10
 
-mongo --host mongo1:27017 <<EOF
+mongo --host mongo-node1:27017 <<EOF
 var config = {
     "_id": "rs0",
     "version": 1,
@@ -17,12 +17,12 @@ var config = {
         {
             "_id": 1,
             "host": "mongo-node2:27017",
-            "priority": 1
+            "priority": 0
         },
         {
             "_id": 2,
             "host": "mongo-node3:27017",
-            "priority": 1
+            "priority": 0
         }
     ]
 };
@@ -33,4 +33,4 @@ echo "****** Waiting for ${DELAY} seconds for replicaset configuration to be app
 
 sleep $DELAY
 
-mongo --host mongo1:27017 < /scripts/init.js
+mongo --host mongo-node1:27017 < /scripts/init.js
