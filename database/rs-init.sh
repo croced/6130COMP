@@ -33,4 +33,4 @@ echo "****** Waiting for ${DELAY} seconds for replicaset configuration to be app
 
 sleep $DELAY
 
-mongo --host mongo-node1:27017 < /scripts/init.js
+mongo --host mongo-node1:27017 < /database/init.js

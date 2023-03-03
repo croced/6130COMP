@@ -1,6 +1,6 @@
 <?php
     // TODO: move to .env file?
-    const BACKEND_URL = "http://192.168.64.2";
+    const BACKEND_URL = "http://192.168.64.3";
     const BACKEND_PORT = "84";
     const BACKEND_PATH = "/competitionResult.php";
 
@@ -8,7 +8,6 @@
 
     $upper = file_get_contents(TEMPLATE_PATH . "upper.html");
     $lower = file_get_contents(TEMPLATE_PATH . "lower.html");
-
 
     $data = array('packCode' => $_POST['packCode'], 'bestPlayer' => $_POST['bestPlayer']);
 
@@ -47,6 +46,27 @@ RESULT;
         $result = <<<RESULT
             <h4 class="text-light">Better luck next time!</h4>
             <p class="text-light">Check your email address for a voucher worth 10% off your next bag of Runners Crisps!</p>    
+RESULT;
+    }
+    else if ($response == "INVALID_CODE") // Invalid code
+    {
+        $result = <<<RESULT
+            <h4 class="text-light">Invalid code</h4>
+            <p class="text-light">The code you have entered is invalid! Please check you have entered it correctly, and try again.</p>    
+RESULT;
+    }
+    else if ($response == "CODE_USED") // Code has been used already
+    {
+        $result = <<<RESULT
+            <h4 class="text-light">Code used aready</h4>
+            <p class="text-light">Oops - it looks like this code has been used before! Please try a new code.</p>    
+RESULT;
+    }
+    else if ($response == "INVALID_DATA") // Invalid data
+    {
+        $result = <<<RESULT
+            <h4 class="text-light">Oops!</h4>
+            <p class="text-light">Some of the data you have entered is invalid! Please try again.</p>    
 RESULT;
     }
     else // unexpected response

@@ -118,7 +118,7 @@ services:
       - database
     restart: always
     ports:
-      - "40001:27017"
+      - "40003:27017"
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
 
   mongo-config:
