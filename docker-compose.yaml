@@ -1,0 +1,146 @@
+version: '3'
+
+services:
+
+  frontend-node1:
+    build: ./frontend/webform
+    networks:
+      - frontend
+      - backend
+    restart: always
+    ports:
+      - "81:80"
+
+  frontend-node2:
+    build: ./frontend/webform
+    networks:
+      - frontend
+      - backend
+    restart: always
+    ports:
+      - "82:80"
+
+  frontend-node3:
+    build: ./frontend/webform
+    networks:
+      - frontend
+      - backend
+    restart: always
+    ports:
+      - "83:80"
+
+  frontend-nginx:
+    build: ./frontend/nginx
+    networks:
+      - frontend
+      - backend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+     - frontend-node1
+     - frontend-node2
+     - frontend-node3 
+
+
+  backend-node1:
+    build: ./backend/server
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "85:80"
+
+  backend-node2:
+    build: ./backend/server
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "86:80"
+
+  backend-node3:
+    build: ./backend/server
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "87:80"
+
+  backend-nginx:
+    build: ./backend/nginx
+    networks:
+      - frontend
+      - backend
+      - database
+    restart: always
+    ports:
+      - "84:80"
+    depends_on:
+     - backend-node1
+     - backend-node2
+     - backend-node3
+
+     
+  mongo-node1:
+    hostname: mongo-node1
+    container_name: mongo-node1
+    image: mongo:4.1
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "40001:27017"
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+
+  mongo-node2:
+    hostname: mongo-node2
+    container_name: mongo-node2
+    image: mongo:4.1
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "40002:27017"
+    entrypoint: [ "/usr/bin/mongod","--bind_ip_all", "--replSet", "rs0" ]
+
+  mongo-node3:
+    hostname: mongo-node3
+    container_name: mongo-node3
+    image: mongo:4.1
+    networks:
+      - backend
+      - database
+    restart: always
+    ports:
+      - "40003:27017"
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+
+  mongo-config:
+    hostname: mongo-config
+    container_name: mongo-config
+    image: mongo:4.1
+    networks:
+      - database
+    restart: "no"
+    depends_on:
+      - mongo-node1
+      - mongo-node2
+      - mongo-node3
+    volumes:
+      - ./database/rs-init.sh:/database/rs-init.sh
+      - ./database/init.js:/database/init.js
+    entrypoint: [ "bash" , "/database/rs-init.sh" ]
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+  database:
+    driver: bridge
